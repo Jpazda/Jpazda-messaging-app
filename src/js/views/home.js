@@ -1,15 +1,36 @@
 import React from "react";
-import rigoImage from "../../img/rigo-baby.jpg";
-import "../../styles/home.css";
+import firebase from "firebase/app";
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import "firebase/firestore";
+import "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useCollectionData } from "react-firebase-hooks/firestore";
+import SignIn from "src/js/views/signin.js";
+import { ChatRoom } from "./chatroom";
 
-export const Home = () => (
-	<div className="text-center mt-5">
-		<h1>Hello Rigo!</h1>
-		<p>
-			<img src={rigoImage} />
-		</p>
-		<a href="#" className="btn btn-success">
-			If you see this green button, bootstrap is working
-		</a>
-	</div>
-);
+const firebaseConfig = {
+  apiKey: "AIzaSyCML9UV3MfRTbdCkARyZ8Xz6BkK2aGEUoE",
+  authDomain: "jpazda-messaging-app.firebaseapp.com",
+  projectId: "jpazda-messaging-app",
+  storageBucket: "jpazda-messaging-app.appspot.com",
+  messagingSenderId: "1028577701283",
+  appId: "1:1028577701283:web:76ad0aed19abbba4377e16",
+  measurementId: "G-VR8L8TLKJB",
+};
+
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
+const auth = firebase.auth();
+const firestore = firebase.firestore();
+
+export const Home = () => {
+  const [user] = useAuthState(auth);
+  return (
+    <div>
+      <header></header>
+      <section>{user ? <ChatRoom /> : <SignIn />}</section>
+    </div>
+  );
+};
