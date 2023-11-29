@@ -1,36 +1,41 @@
 import React from "react";
 import firebase from "firebase/app";
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
 import "firebase/firestore";
 import "firebase/auth";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useCollectionData } from "react-firebase-hooks/firestore";
-import SignIn from "src/js/views/signin.js";
-import { ChatRoom } from "./chatroom";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCML9UV3MfRTbdCkARyZ8Xz6BkK2aGEUoE",
-  authDomain: "jpazda-messaging-app.firebaseapp.com",
-  projectId: "jpazda-messaging-app",
-  storageBucket: "jpazda-messaging-app.appspot.com",
-  messagingSenderId: "1028577701283",
-  appId: "1:1028577701283:web:76ad0aed19abbba4377e16",
-  measurementId: "G-VR8L8TLKJB",
+  apiKey: "AIzaSyDvEvvDA1C1TkfdVDfzjmTLBM4O-FqXGjo",
+  authDomain: "jpazda-messaging-app-c128f.firebaseapp.com",
+  projectId: "jpazda-messaging-app-c128f",
+  storageBucket: "jpazda-messaging-app-c128f.appspot.com",
+  messagingSenderId: "115815751797",
+  appId: "1:115815751797:web:2dbe6a5e020035bd17183c",
+  measurementId: "G-6FM4B66WRP"
 };
 
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+initializeApp(firebaseConfig);
 
-const auth = firebase.auth();
-const firestore = firebase.firestore();
+const db = getFirestore();
+const colRef = collection(db, 'messages');
+getDocs(colRef)
+  .then((snapshot) => {
+    let messages = []
+    snapshot.docs.forEach((doc) => {
+      messages.push({ ...doc.data(), id: doc.id })
+    })
+    console.log(messages)
+  })
+  .catch((err) => {
+    console.log(err.message)
+  })
+
 
 export const Home = () => {
-  const [user] = useAuthState(auth);
   return (
     <div>
-      <header></header>
-      <section>{user ? <ChatRoom /> : <SignIn />}</section>
+     <h1>Hello World</h1>
     </div>
   );
 };
