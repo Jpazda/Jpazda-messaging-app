@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { Home } from "./views/home";
 import injectContext from "./store/appContext";
+import { Login } from "./views/login";
+import { Mainpage } from "./views/mainPage";
 
 
 //create your first component
@@ -16,6 +18,7 @@ const Layout = () => {
 			<BrowserRouter basename={basename}>
 					<Routes>
 						<Route path="/" element={<Home />} />
+						<Route path="/login" element={<Login />} />
 						<Route path="*" element={<h1>Not found!</h1>} />
 					</Routes>
 			</BrowserRouter>

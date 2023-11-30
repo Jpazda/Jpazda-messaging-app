@@ -4,6 +4,10 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import "firebase/firestore";
 import "firebase/auth";
+import { Register } from "./registration";
+import "../../styles/style.css";
+import { Mainpage } from "./mainPage";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyDvEvvDA1C1TkfdVDfzjmTLBM4O-FqXGjo",
@@ -35,7 +39,7 @@ getDocs(colRef)
 export const Home = () => {
   return (
     <div>
-     <h1>Hello World</h1>
+     <Mainpage />
     </div>
   );
 };
