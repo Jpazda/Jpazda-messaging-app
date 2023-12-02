@@ -7,6 +7,7 @@ import "firebase/auth";
 import { Register } from "./registration";
 import "../../styles/style.css";
 import { Mainpage } from "./mainPage";
+import { Sidebar } from "../component/sidebar";
 
 
 const firebaseConfig = {
@@ -38,7 +39,7 @@ getDocs(colRef)
 
 export const Home = () => {
   return (
-    <div>
+    <div className="home">
      <Mainpage />
     </div>
   );
