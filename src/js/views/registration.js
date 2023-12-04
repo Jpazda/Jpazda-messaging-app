@@ -19,7 +19,7 @@ export const Register = () => {
 
     try {
       //Create user
-      const response = await createUserWithEmailAndPassword(auth, email, password);
+      const respon = await createUserWithEmailAndPassword(auth, email, password);
 
       //Create a unique image name
       const date = new Date().getTime();
@@ -29,20 +29,20 @@ export const Register = () => {
         getDownloadURL(storageRef).then(async (downloadURL) => {
           try {
             //Update profile
-            await updateProfile(response.user, {
+            await updateProfile(respon.user, {
               displayName,
               photoURL: downloadURL,
             });
             //create user on firestore
-            await setDoc(doc(db, "users", response.user.uid), {
-              uid: response.user.uid,
+            await setDoc(doc(db, "users", respon.user.uid), {
+              uid: respon.user.uid,
               displayName,
               email,
               photoURL: downloadURL,
             });
 
             //create empty user chats on firestore
-            await setDoc(doc(db, "userChats", response.user.uid), {});
+            await setDoc(doc(db, "userChats", respon.user.uid), {});
             navigate("/");
           } catch (err) {
             console.log(err);
