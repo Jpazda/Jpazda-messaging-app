@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { Home } from "./views/home";
-import injectContext from "./store/appContext";
 import { Login } from "./views/login";
 import { Register } from "./views/registration";
 import { AuthContext } from "./context/authContext";
@@ -40,4 +39,4 @@ const Layout = () => {
   );
 };
 
-export default injectContext(Layout);
+export default Layout;

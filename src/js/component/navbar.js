@@ -11,11 +11,8 @@ export const Navbar = () => {
     <div className="navbar">
       <span className="logo">Easy Chat</span>
       <div className="user">
-        <img
-          src={currentUser && currentUser.photoURL}
-          alt="profile picture"
-        ></img>
-        <span>{currentUser && currentUser.displayName}</span>
+        <img src={currentUser.photoURL} alt="profile picture"></img>
+        <span>{currentUser.displayName}</span>
         <button onClick={() => signOut(auth)}>logout</button>
       </div>
     </div>
