@@ -3,7 +3,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, storage, db } from "../../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
-import { useNavigate, Link } from "react-router";
+import { useNavigate, Link } from "react-router-dom";
 
 export const Register = () => {
   const [err, setErr] = useState(false);
@@ -19,7 +19,11 @@ export const Register = () => {
 
     try {
       //Create user
-      const respon = await createUserWithEmailAndPassword(auth, email, password);
+      const respon = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
 
       //Create a unique image name
       const date = new Date().getTime();
@@ -97,7 +101,7 @@ export const Register = () => {
           {err && <span>Something went wrong...</span>}
         </form>
         <p className="d-flex justify-content-center">
-          Already have an account? Login
+          Already have an account? <Link to="/login">Login</Link>
         </p>
       </div>
     </div>
