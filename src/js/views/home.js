@@ -10,31 +10,19 @@ import { Mainpage } from "./mainPage";
 import { Sidebar } from "../component/sidebar";
 
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDvEvvDA1C1TkfdVDfzjmTLBM4O-FqXGjo",
-  authDomain: "jpazda-messaging-app-c128f.firebaseapp.com",
-  projectId: "jpazda-messaging-app-c128f",
-  storageBucket: "jpazda-messaging-app-c128f.appspot.com",
-  messagingSenderId: "115815751797",
-  appId: "1:115815751797:web:2dbe6a5e020035bd17183c",
-  measurementId: "G-6FM4B66WRP"
-};
-
-initializeApp(firebaseConfig);
-
-const db = getFirestore();
-const colRef = collection(db, 'messages');
-getDocs(colRef)
-  .then((snapshot) => {
-    let messages = []
-    snapshot.docs.forEach((doc) => {
-      messages.push({ ...doc.data(), id: doc.id })
-    })
-    console.log(messages)
-  })
-  .catch((err) => {
-    console.log(err.message)
-  })
+// const db = getFirestore();
+// const colRef = collection(db, 'messages');
+// getDocs(colRef)
+//   .then((snapshot) => {
+//     let messages = []
+//     snapshot.docs.forEach((doc) => {
+//       messages.push({ ...doc.data(), id: doc.id })
+//     })
+//     console.log(messages)
+//   })
+//   .catch((err) => {
+//     console.log(err.message)
+//   })
 
 
 export const Home = () => {
