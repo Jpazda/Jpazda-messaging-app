@@ -7,6 +7,7 @@ import {
   arrayRemove,
   updateDoc,
   Timestamp,
+  serverTimestamp,
 } from "firebase/firestore";
 import { db, storage } from "../../firebase";
 import { v4 as uuid } from "uuid";
@@ -46,9 +47,10 @@ export const Input = () => {
             });
           });
         }
+     
       );
     } else {
-      console.log("you clicked the input button");
+      console.log(data.chatId);
       await updateDoc(doc(db, "chats", data.chatId), {
         messages: arrayUnion({
           id: uuid(),
@@ -57,6 +59,22 @@ export const Input = () => {
           date: Timestamp.now(),
         }),
       });
+      await updateDoc(doc(db, "userChats", currentUser.uid), {
+        [data.chatId + "lastMessage"]: {
+          text,
+        },
+        [data.chatId + ".date"]: serverTimestamp(),
+      });
+
+      await updateDoc(doc(db, "userChats", data.user.uid), {
+        [data.chatId + ".lastMessage"]: {
+          text,
+        },
+        [data.chatId + ".date"]: serverTimestamp(),
+      });
+
+      setText("");
+      setImg(null);
     }
   };
 
