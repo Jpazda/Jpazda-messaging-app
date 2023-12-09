@@ -8,6 +8,7 @@ import "../styles/index.css";
 //import your own components
 import Layout from "./layout.js";
 import { AuthContextProvider } from "./context/authContext.js";
+import { ChatContextProvider } from "./context/chatContext.js";
 
 //
 const root = createRoot(document.querySelector("#app"));
@@ -15,6 +16,8 @@ const root = createRoot(document.querySelector("#app"));
 //render your react application
 root.render(
   <AuthContextProvider>
-    <Layout />
+    <ChatContextProvider>
+      <Layout />
+    </ChatContextProvider>
   </AuthContextProvider>
 );

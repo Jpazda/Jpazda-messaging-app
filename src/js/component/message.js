@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../context/authContext";
+import { ChatContext } from "../context/chatContext";
 
-export const Message = () => {
+export const Message = ({message}) => {
+  const {currentUser} = useContext(AuthContext);
+  const {data} = useContext(ChatContext);
+
   return (
     <div className="message owner">
-      <div className="messageInfo">
+      {/* <div className="messageInfo">
         <img
-          src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=600"
+          src=
           alt=""
         />
         <span>just now</span>
@@ -16,7 +21,7 @@ export const Message = () => {
           src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=600"
           alt=""
         />
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -69,8 +69,9 @@ export const Search = () => {
         });
         console.log(user);
       }
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
+    } finally {
       setUser(null);
       setUsername("");
     }

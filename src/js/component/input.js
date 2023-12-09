@@ -1,16 +1,85 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { AuthContext } from "../context/authContext";
+import { ChatContext } from "../context/chatContext";
+import {
+  doc,
+  arrayUnion,
+  arrayRemove,
+  updateDoc,
+  Timestamp,
+} from "firebase/firestore";
+import { db, storage } from "../../firebase";
+import { v4 as uuid } from "uuid";
+import {
+  getDownloadURL,
+  ref,
+  uploadBytes,
+  uploadBytesResumable,
+} from "firebase/storage";
 
 export const Input = () => {
+  const [text, setText] = useState("");
+  const [img, setImg] = useState(null);
+
+  const { currentUser } = useContext(AuthContext);
+  const { data } = useContext(ChatContext);
+
+  const handleSend = async () => {
+    if (img) {
+      const storageRef = ref(storage, uuid());
+      const uploadTask = uploadBytesResumable(storageRef, img);
+
+      uploadTask.on(
+        (error) => {
+          // setErr(true)
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+            await updateDoc(doc(db, "chats", data.chatId), {
+              messages: arrayUnion({
+                id: uuid(),
+                text,
+                senderId: currentUser.uid,
+                date: Timestamp.now(),
+                img: downloadURL,
+              }),
+            });
+          });
+        }
+      );
+    } else {
+      console.log("you clicked the input button");
+      await updateDoc(doc(db, "chats", data.chatId), {
+        messages: arrayUnion({
+          id: uuid(),
+          text,
+          senderId: currentUser.uid,
+          date: Timestamp.now(),
+        }),
+      });
+    }
+  };
+
   return (
     <div className="input">
-      <input type="text" placeholder="Type something..."></input>
+      <input
+        type="text"
+        placeholder="Type something..."
+        onChange={(e) => setText(e.target.value)}
+        value={text}
+      ></input>
       <div className="send">
-      <i className="fa-solid fa-paperclip"></i>
-      <input type="file" style={{display: "none"}} id="file"></input>
-      <label htmlFor="file">
-      <i className="fa-regular fa-image"></i>
-      </label>
-      <button>Send</button>
+        <i className="fa-solid fa-paperclip"></i>
+        <input
+          type="file"
+          style={{ display: "none" }}
+          id="file"
+          onChange={(e) => setImg(e.target.files[0])}
+        ></input>
+        <label htmlFor="file">
+          <i className="fa-regular fa-image"></i>
+        </label>
+        <button onClick={handleSend}>Send</button>
       </div>
     </div>
   );

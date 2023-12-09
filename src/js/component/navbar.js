@@ -2,10 +2,11 @@ import React, { useContext } from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import { AuthContext } from "../context/authContext";
-import { Navigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 
 export const Navbar = () => {
   const { currentUser } = useContext(AuthContext);
+  const navigate = useNavigate();
   console.log("navbar", currentUser);
 
   return (
@@ -16,6 +17,7 @@ export const Navbar = () => {
         <span>{currentUser.displayName}</span>
         <button
           onClick={() => {
+            navigate("/login");
             signOut(auth);
           }}
         >
