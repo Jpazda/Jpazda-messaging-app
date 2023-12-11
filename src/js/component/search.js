@@ -12,12 +12,14 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import { AuthContext } from "../context/authContext";
+import { ChatContext } from "../context/chatContext";
 
 export const Search = () => {
   const [username, setUsername] = useState("");
   const [user, setUser] = useState(null);
   const [err, setErr] = useState(false);
   const { currentUser } = useContext(AuthContext);
+  const {dispatch} = useContext(ChatContext);
 
   const userRef = collection(db, "users");
   const handleSearch = async () => {
@@ -39,7 +41,7 @@ export const Search = () => {
     e.code === "Enter" && handleSearch();
   };
 
-  const handleSelect = async () => {
+  const handleSelect = async (u) => {
     const combinedID =
       currentUser.uid > user.uid
         ? currentUser.uid + user.uid

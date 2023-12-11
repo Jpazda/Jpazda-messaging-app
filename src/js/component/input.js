@@ -60,7 +60,7 @@ export const Input = () => {
         }),
       });
       await updateDoc(doc(db, "userChats", currentUser.uid), {
-        [data.chatId + "lastMessage"]: {
+        [data.chatId + ".lastMessage"]: {
           text,
         },
         [data.chatId + ".date"]: serverTimestamp(),
@@ -72,9 +72,12 @@ export const Input = () => {
         },
         [data.chatId + ".date"]: serverTimestamp(),
       });
+      
 
       setText("");
       setImg(null);
+      console.log("current user uid", currentUser.uid);
+      console.log("user uid", data.user.uid);
     }
   };
 

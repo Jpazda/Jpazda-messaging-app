@@ -22,7 +22,7 @@ export const Chats = () => {
     currentUser.uid && getChats();
   }, [currentUser.uid]);
 
-  console.log(Object.entries(chats));
+  console.log("logging chats", Object.entries(chats));
 
   const handleSelect = (u) => {
     dispatch({ type: "CHANGE_USER", payload: u });
@@ -30,7 +30,7 @@ export const Chats = () => {
 
   return (
     <div className="chats">
-      {Object.entries(chats).map((chat) => {
+      {Object.entries(chats).sort((a,b)=>b[1].date-a[1].date).map((chat) => {
         return (
           <div
             className="userChat"
@@ -39,8 +39,8 @@ export const Chats = () => {
           >
             <img src={chat[1].userInfo?.photoURL} alt="" />
             <div className="userChatInfo">
-              <span>{chat[1].userInfo.displayName}</span>
-              <p>{chat[1].userInfo.lastMessage?.text}</p>
+              <span>{chat[1].userInfo?.displayName}</span>
+              <p>{chat[1].lastMessage?.text}</p>
             </div>
           </div>
         );

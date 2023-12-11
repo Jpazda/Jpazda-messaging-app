@@ -12,14 +12,17 @@ export const Messages = () => {
     const unsub = onSnapshot(doc(db, "chats", data.chatId), (doc) => {
       doc.exists() && setMessages(doc.data().messages);
     });
-    return unsub();
+    return () => unsub();
   }, [data.chatId]);
-  console.log(messages);
+  console.log("logging messages from the messages component",messages);
+  console.log("logging chatID from messages component", data.chatId);
 
   return (
     <div className="messages">
       {messages.map((message) => {
-        <Message message={message} key={message.id}/>;
+        return (
+          <Message message={message} key={message.id}/>
+          );
       })}
     </div>
   );
