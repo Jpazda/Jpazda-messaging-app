@@ -8,7 +8,7 @@ import { AuthContext } from "./context/authContext";
 const Layout = () => {
   const basename = process.env.BASENAME || "";
 
-  const currentUser = useContext(AuthContext);
+  const {currentUser} = useContext(AuthContext);
 
   const ProtectedRoute = ({ children }) => {
     if (!currentUser) {
